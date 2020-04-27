@@ -2,15 +2,23 @@ let capture
 let tracker
 let stars = []  // make star array
 let bouncing_balls = []
+let star_vid
 
+function preload() {
+
+star_vid =
+createVideo('star_internet.mp4')
+star_vid.hide()
+
+}
 
 function setup() {
 
-    createCanvas(800, 600).parent('p5')
+    createCanvas(windowWidth, windowHeight).parent('p5')
 
     // set up video and tracker
     capture = createCapture(VIDEO)
-    capture.size(800, 600)
+    capture.size(windowWidth, windowHeight)
     capture.hide()
     tracker = new clm.tracker()
     tracker.init()
@@ -45,6 +53,8 @@ function setup() {
 }
 
 function draw() {
+
+  image(star_vid, 100, 100, star_vid.width, star_vid.height)
 
   let color_1 = color(0, 1, 5)      //  is our first color
 let color_2 = color(15, 36, 138)      //  is our second color
@@ -181,6 +191,13 @@ background(lerped_color)
 
 }
 
+function mouseClicked() {
+
+star_vid.play()
+star_vid.loop()
+
+  
+}
 // adapted from https://p5js.org/examples/form-star.html
 function drawStar(x, y, radius1, radius2, npoints) {
   let angle = TWO_PI / npoints;
