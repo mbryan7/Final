@@ -3,6 +3,7 @@ let tracker
 let stars = []  // make star array
 let bouncing_balls = []
 let star_vid
+let video_started = false
 
 function preload() {
 
@@ -14,11 +15,11 @@ star_vid.hide()
 
 function setup() {
 
-    createCanvas(windowWidth, windowHeight).parent('p5')
+    createCanvas(800, 600).parent('p5')
 
     // set up video and tracker
     capture = createCapture(VIDEO)
-    capture.size(windowWidth, windowHeight)
+    capture.size(800, 600)
     capture.hide()
     tracker = new clm.tracker()
     tracker.init()
@@ -54,7 +55,10 @@ function setup() {
 
 function draw() {
 
-  image(star_vid, 100, 100, star_vid.width, star_vid.height)
+  background(0)
+
+  image(star_vid, 0, 0, 800, 600)
+
 
   let color_1 = color(0, 1, 5)      //  is our first color
 let color_2 = color(15, 36, 138)      //  is our second color
@@ -77,16 +81,11 @@ let lerped_color = lerpColor(color_1, color_2, fade_amount)
 // if (changing_color.c == 0 || changing_color.c == 500) {
 //     changing_color.vc = -changing_color.vc
 // }
-
-background(lerped_color)
+//background(lerped_color)
 
     //showFlippedCapture()
 
     let features = tracker.getCurrentPosition()
-
-    // only take the features from index 23 on
-    // doing this because I don't want the face perimeter or eyebrows
-    //features = features.slice(23)
 
 
     // 'features' is an array of objects with x, y properties
@@ -193,10 +192,13 @@ background(lerped_color)
 
 function mouseClicked() {
 
-star_vid.play()
+//star_vid.play()
+if (video_started == false) {
 star_vid.loop()
+star_vid.volume(0)
+video_started = true
+    }
 
-  
 }
 // adapted from https://p5js.org/examples/form-star.html
 function drawStar(x, y, radius1, radius2, npoints) {
